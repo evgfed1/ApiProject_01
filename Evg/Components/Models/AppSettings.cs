@@ -1,7 +1,10 @@
-﻿namespace Evg.Components.Models;
+﻿// Код класса AppSettings
 
+namespace Evg.Components.Models
+{
     public class AppSettings
     {
-        public string ConnectionString {  get; set; }
+        public string DbCnStr { get; set; }
+        public string testString { get; set; }  
     }
-
+}
