@@ -1,6 +1,8 @@
-﻿using Evg.Components.Models;
+﻿// Ваш код контроллера
+
+using Evg.Components.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace Evg.Controllers
 {
@@ -8,19 +10,18 @@ namespace Evg.Controllers
     [Route("api/[controller]")]
     public class DataBaseController : ControllerBase
     {
-        private readonly IConfiguration _configuration;
+        private readonly AppSettings _appSettings;
 
-        public DataBaseController(IConfiguration configuration)
+        public DataBaseController(IOptions<AppSettings> appSettings)
         {
-            _configuration = configuration;
+            _appSettings = appSettings.Value;
         }
 
         [HttpGet("connectionString")]
         public IActionResult GetConnectionString()
         {
-            string dbConnectionString = _configuration.GetConnectionString("DbCnStr");
-
-            return Ok(new { ConnectionStrings = dbConnectionString });
+            return Ok(new { ConnectionStrings = _appSettings?.DbCnStr });
+            //return Ok(new { ConnectionStrings = _appSettings?.testString });
         }
     }
 }
