@@ -7,18 +7,18 @@ using Microsoft.Extensions.Options;
 namespace Evg.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
-    public class DataBaseController : ControllerBase
+    [Route("api/[controller]/[action]")]
+    public class SettingController : ControllerBase
     {
         private readonly AppSettings _appSettings;
 
-        public DataBaseController(IOptions<AppSettings> appSettings)
+        public SettingController(IOptions<AppSettings> appSettings)
         {
             _appSettings = appSettings.Value;
         }
 
         [HttpGet]
-        public IActionResult GetConnectionString()
+        public IActionResult Get()
         {
             //return Ok(_appSettings?.DbCnStr);
             return Ok(new { _appSettings?.DbCnStr });
