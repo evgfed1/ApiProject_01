@@ -4,11 +4,11 @@ namespace Evg.Components.Models;
 using Microsoft.Extensions.Configuration;
 
 
-    public static class ServiceCollectionExtension
+public static class ServiceCollectionExtension
+{
+    public static void AddSettings1(this IServiceCollection services, IConfiguration configuration)
     {
-        public static void AddSettings1(this IServiceCollection services, IConfiguration configuration)
-        {
-            services.Configure<AppSettings>(configuration.GetSection("ConnectionStrings"));
-        }
+        services.Configure<AppSettings>(configuration.GetSection("ConnectionStrings"));
     }
+}
 

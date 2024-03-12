@@ -5,6 +5,6 @@ namespace Evg.Components.Models
     public class AppSettings
     {
         public string DbCnStr { get; set; }
-        public string testString { get; set; }  
+        public string testString { get; set; }
     }
 }
