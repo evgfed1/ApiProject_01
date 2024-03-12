@@ -20,7 +20,7 @@ namespace Evg.Controllers
         [HttpGet]
         public IActionResult GetConnectionString()
         {
-
+            //return Ok(_appSettings?.DbCnStr);
             return Ok(new { _appSettings?.DbCnStr });
 
 
