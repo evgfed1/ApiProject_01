@@ -7,7 +7,7 @@ using Microsoft.Extensions.Options;
 namespace Evg.Controllers
 {
     [ApiController]
-    [Route("api/[controller]/[action]")]
+    [Route("[controller]/[action]")]
     public class SettingController : ControllerBase
     {
         private readonly AppSettings _appSettings;
