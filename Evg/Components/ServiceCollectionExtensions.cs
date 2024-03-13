@@ -3,7 +3,6 @@ namespace Evg.Components.Models;
 
 using Microsoft.Extensions.Configuration;
 
-
 public static class ServiceCollectionExtension
 {
     public static void AddSettings1(this IServiceCollection services, IConfiguration configuration)
@@ -11,4 +10,3 @@ public static class ServiceCollectionExtension
         services.Configure<AppSettings>(configuration.GetSection("ConnectionStrings"));
     }
 }
-

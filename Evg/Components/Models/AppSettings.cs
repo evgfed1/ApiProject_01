@@ -1,6 +1,4 @@
-﻿// Код класса AppSettings
-
-namespace Evg.Components.Models
+﻿namespace Evg.Components.Models
 {
     public class AppSettings
     {

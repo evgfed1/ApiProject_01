@@ -10,31 +10,55 @@ namespace Evg.Controllers
         [HttpGet]
         public IActionResult GetPerson()
         {
-            var PersonDto = new PersonDto
+            var person = new PersonDto
             {
+                PersonId = 1,
                 FirstName = "Simon",
                 LastName = "Smith",
-                PersonId = 1
+                Status = "A"
             };
 
-            return Ok(PersonDto);
+            return Ok(person);
         }
 
 
+        [HttpPut]
+        public IActionResult PutPerson(PersonDto person)
+        {
+            person.FirstName = "Andrew";
+            person.LastName = "Mayers";
+
+            return Ok("Person updated successfully: " + person.FirstName + " " + person.LastName);
+        }
+
+
+        [HttpDelete]
+        public IActionResult DeletePerson(int personId)
+        {
+            var activePerson = new PersonDto
+            {
+                PersonId = 2,
+                FirstName = "Bradley",
+                LastName = "Cooper",
+                Status = "A"
+            };
+
+            activePerson.Status = "D";
+
+            return Ok("Person: " + activePerson.FirstName + " " + activePerson.LastName + " was successfully deleted");
+        }
 
         [HttpPost]
-        public IActionResult EditPerson()
+        public IActionResult PostPerson(PersonDto person)
         {
-            var PersonDto = new PersonDto
+            var newPerson = new PersonDto
             {
-                FirstName = "",
-                LastName = "",
-                PersonId = null
+                PersonId = 2,
+                FirstName = "Brad",
+                LastName = "Pitt",
+                Status = "A"
             };
-
-            return Ok(PersonDto);
+            return Ok("Person created successfully: " + newPerson.FirstName + " " + newPerson.LastName);
         }
     }
-
 }
-
