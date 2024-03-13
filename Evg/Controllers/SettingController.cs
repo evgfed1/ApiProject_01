@@ -19,7 +19,6 @@ namespace Evg.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            //return Ok(_appSettings?.DbCnStr);
             return Ok(new { _appSettings?.DbCnStr });
         }
     }

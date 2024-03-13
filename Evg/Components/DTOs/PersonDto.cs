@@ -5,7 +5,7 @@ namespace Evg.Components.DTOs
     public class PersonIdDto
     {
         [Required]
-        public int PersonId { get; set; }
+        public int? PersonId { get; set; }
     }
 
     public class PersonDto : PersonIdDto
