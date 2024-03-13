@@ -9,8 +9,12 @@ namespace Evg.Controllers
     public class PersonController : ControllerBase
     {
         [HttpPost]
-        public IActionResult Get([Required] PersonIdDto person)
+        public IActionResult Get(PersonIdDto person)
         {
+            if (person.PersonId <= 0)
+            {
+                return BadRequest("PersonId must be more than 0.");
+            }
             person = new PersonDto
             {
                 PersonId = 1,
@@ -24,7 +28,7 @@ namespace Evg.Controllers
 
 
         [HttpPost]
-        public IActionResult Edit([Required] PersonDto person)
+        public IActionResult Edit(PersonDto person)
         {
             person.FirstName = "Andrew";
             person.LastName = "Mayers";
@@ -36,8 +40,12 @@ namespace Evg.Controllers
         [HttpPost]
         public IActionResult Delete([Required] PersonIdDto person)
         {
+            if (person.PersonId <= 0)
+            {
+                return BadRequest("PersonId must be more than 0.");
+            }
             person.PersonId = 2;
-          
+
 
             return Ok("PersonId: " + person.PersonId + " was successfully deleted");
         }
