@@ -1,6 +1,4 @@
-﻿// Ваш код контроллера
-
-using Evg.Components.Models;
+﻿using Evg.Components.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 

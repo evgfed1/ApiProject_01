@@ -1,5 +1,6 @@
 ﻿using Evg.Components.DTOs;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace Evg.Controllers
 {
@@ -7,10 +8,10 @@ namespace Evg.Controllers
     [Route("/[controller]/[action]")]
     public class PersonController : ControllerBase
     {
-        [HttpGet]
-        public IActionResult GetPerson()
+        [HttpPost]
+        public IActionResult Get([Required] PersonIdDto person)
         {
-            var person = new PersonDto
+            person = new PersonDto
             {
                 PersonId = 1,
                 FirstName = "Simon",
@@ -22,8 +23,8 @@ namespace Evg.Controllers
         }
 
 
-        [HttpPut]
-        public IActionResult PutPerson(PersonDto person)
+        [HttpPost]
+        public IActionResult Edit([Required] PersonDto person)
         {
             person.FirstName = "Andrew";
             person.LastName = "Mayers";
@@ -32,24 +33,17 @@ namespace Evg.Controllers
         }
 
 
-        [HttpDelete]
-        public IActionResult DeletePerson(int personId)
+        [HttpPost]
+        public IActionResult Delete([Required] PersonIdDto person)
         {
-            var activePerson = new PersonDto
-            {
-                PersonId = 2,
-                FirstName = "Bradley",
-                LastName = "Cooper",
-                Status = "A"
-            };
+            person.PersonId = 2;
+          
 
-            activePerson.Status = "D";
-
-            return Ok("Person: " + activePerson.FirstName + " " + activePerson.LastName + " was successfully deleted");
+            return Ok("PersonId: " + person.PersonId + " was successfully deleted");
         }
 
         [HttpPost]
-        public IActionResult PostPerson(PersonDto person)
+        public IActionResult Post([Required] PersonDto person)
         {
             var newPerson = new PersonDto
             {
@@ -58,6 +52,7 @@ namespace Evg.Controllers
                 LastName = "Pitt",
                 Status = "A"
             };
+
             return Ok("Person created successfully: " + newPerson.FirstName + " " + newPerson.LastName);
         }
     }

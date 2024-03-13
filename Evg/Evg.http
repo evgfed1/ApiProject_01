@@ -1,6 +1,0 @@
-@Evg_HostAddress = http://localhost:5032
-
-GET {{Evg_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

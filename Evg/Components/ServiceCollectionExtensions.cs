@@ -1,12 +1,11 @@
-﻿// Метод расширения ServiceCollectionExtension
-namespace Evg.Components.Models;
+﻿namespace Evg.Components.Models;
 
 using Microsoft.Extensions.Configuration;
 
 public static class ServiceCollectionExtension
 {
-    public static void AddSettings1(this IServiceCollection services, IConfiguration configuration)
+    public static void AddSettings(this IServiceCollection services, IConfiguration configuration)
     {
-        services.Configure<AppSettings>(configuration.GetSection("ConnectionStrings"));
+        services.Configure<AppSettings>(configuration.GetSection("AppSettings"));
     }
 }

@@ -3,7 +3,7 @@
 var builder = WebApplication.CreateBuilder(args);
 
 // Зарегистрируйте AppSettings в контейнере зависимостей
-builder.Services.AddSettings1(builder.Configuration);
+builder.Services.AddSettings(builder.Configuration);
 
 // Add services to the container.
 builder.Services.AddControllers();
