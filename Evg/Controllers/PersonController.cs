@@ -13,8 +13,13 @@ namespace Evg.Controllers
         {
             if (person.PersonId <= 0)
             {
-                return BadRequest("PersonId must be more than 0.");
+                ModelState.AddModelError("PersonId", "PersonId must be more than 0");
             }
+            if (!ModelState.IsValid)
+            {
+                return ValidationProblem();
+            }
+
             person = new PersonDto
             {
                 PersonId = 1,
@@ -30,6 +35,23 @@ namespace Evg.Controllers
         [HttpPost]
         public IActionResult Edit(PersonDto person)
         {
+            if (!char.IsUpper(person.FirstName[0]) ||
+                !char.IsUpper(person.LastName[0]) ||
+                person.FirstName.Any(char.IsDigit) ||
+                person.LastName.Any(char.IsDigit) ||
+                person.FirstName.Any(c => !char.IsLetter(c)) ||
+                person.LastName.Any(c => !char.IsLetter(c)) ||
+                person.FirstName.Contains(" ") ||
+                person.LastName.Contains(" "))
+            {
+                ModelState.AddModelError("", "First name and last name must start with a capital letter and should contain only letters.");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return ValidationProblem();
+            }
+
             person.FirstName = "Andrew";
             person.LastName = "Mayers";
 
@@ -42,26 +64,16 @@ namespace Evg.Controllers
         {
             if (person.PersonId <= 0)
             {
-                return BadRequest("PersonId must be more than 0.");
+                ModelState.AddModelError("PersonId", "PersonId must be more than 0");
             }
+            if (!ModelState.IsValid)
+            {
+                return ValidationProblem();
+            }
+
             person.PersonId = 2;
 
-
             return Ok("PersonId: " + person.PersonId + " was successfully deleted");
-        }
-
-        [HttpPost]
-        public IActionResult Post([Required] PersonDto person)
-        {
-            var newPerson = new PersonDto
-            {
-                PersonId = 2,
-                FirstName = "Brad",
-                LastName = "Pitt",
-                Status = "A"
-            };
-
-            return Ok("Person created successfully: " + newPerson.FirstName + " " + newPerson.LastName);
         }
     }
 }
