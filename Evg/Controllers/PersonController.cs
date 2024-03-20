@@ -9,6 +9,8 @@ namespace Evg.Controllers
     [Route("/[controller]/[action]")]
     public class PersonController : ControllerBase
     {
+        private string propertyName;
+
         [HttpPost]
         public IActionResult Get(PersonIdDto person)
         {
@@ -107,62 +109,62 @@ namespace Evg.Controllers
         {
             if (!char.IsUpper(person.FirstName[0]))
             {
-                ModelState.AddModelError("", "First name must start with a capital letter.");
+                ModelState.AddModelError("FirstName", "First name must start with a capital letter.");
             }
 
             if (!char.IsUpper(person.LastName[0]))
             {
-                ModelState.AddModelError("", "Last name must start with a capital letter.");
+                ModelState.AddModelError("LastName", "Last name must start with a capital letter.");
             }
 
             if (Regex.IsMatch(person.FirstName, @"[A-Z]{2,}"))
             {
-                ModelState.AddModelError("", "First name should not contain two or more capital letters.");
+                ModelState.AddModelError("FirstName", "First name should not contain two or more capital letters.");
             }
 
             if (Regex.IsMatch(person.LastName, @"[A-Z]{2,}"))
             {
-                ModelState.AddModelError("", "Last name should not contain two or more capital letters.");
+                ModelState.AddModelError("LastName", "Last name should not contain two or more capital letters.");
             }
 
             if (person.FirstName.Any(char.IsDigit))
             {
-                ModelState.AddModelError("", "First name should not contain numbers.");
+                ModelState.AddModelError("FirstName", "First name should not contain numbers.");
             }
 
             if (person.LastName.Any(char.IsDigit))
             {
-                ModelState.AddModelError("", "Last name should not contain numbers.");
+                ModelState.AddModelError("LastName", "Last name should not contain numbers.");
             }
 
             if (person.FirstName.Any(c => !char.IsLetter(c)))
             {
-                ModelState.AddModelError("", "First name should contain only letters..");
+                ModelState.AddModelError("FirstName", "First name should contain only letters..");
             }
 
             if (person.LastName.Any(c => !char.IsLetter(c)))
             {
-                ModelState.AddModelError("", "Last name should contain only letters..");
+                ModelState.AddModelError("LastName", "Last name should contain only letters..");
             }
 
             if (person.FirstName.Contains(" "))
             {
-                ModelState.AddModelError("", "First name should not contain spaces.");
+                ModelState.AddModelError("FirstName", "First name should not contain spaces.");
             }
 
             if (person.LastName.Contains(" "))
             {
-                ModelState.AddModelError("", "Last name should not contain spaces.");
+                ModelState.AddModelError("LastName", "Last name should not contain spaces.");
             }
 
             if (person.FirstName.Length < 2)
             {
-                ModelState.AddModelError("", "First name should contain 2 or more letters.");
+                ModelState.AddModelError("FirstName", "First name should contain 2 or more letters.");
             }
 
             if (person.LastName.Length < 2)
             {
-                ModelState.AddModelError("", "Last name should contain 2 or more letters..");
+                ModelState.AddModelError("LastName", "Last name should contain 2 or more letters..");
             }
 
             if (!ModelState.IsValid)
@@ -185,7 +187,8 @@ namespace Evg.Controllers
         {
             if (person.PersonId <= 0)
             {
-                ModelState.AddModelError("PersonId", "PersonId must be more than 0");
+                propertyName = nameof(person.PersonId);
+                ModelState.AddModelError(propertyName, $"{propertyName} must be more than 0");
             }
             if (!ModelState.IsValid)
             {
@@ -196,5 +199,61 @@ namespace Evg.Controllers
 
             return Ok("PersonId: " + person.PersonId + " was successfully deleted");
         }
+
+
+
+
+
+        [HttpPost]
+        public IActionResult Edit4(PersonDto person)
+        {
+            ValidateName(person.FirstName, "FirstName");
+            ValidateName(person.LastName, "LastName");
+
+            if (!ModelState.IsValid)
+            {
+                return ValidationProblem();
+            }
+
+            person.FirstName = "Andrew";
+            person.LastName = "Mayers";
+
+            return Ok("Person updated successfully: " + person.FirstName + " " + person.LastName);
+        }
+
+
+        private void ValidateName(string name, string propertyName)
+        {
+            if (!char.IsUpper(name[0]))
+            {
+                ModelState.AddModelError(propertyName, $"{propertyName} must start with a capital letter.");
+            }
+
+            if (Regex.IsMatch(name, @"[A-Z]{2,}"))
+            {
+                ModelState.AddModelError(propertyName, $"{propertyName} should not contain two or more capital letters.");
+            }
+
+            if (name.Any(char.IsDigit))
+            {
+                ModelState.AddModelError(propertyName, $"{propertyName} should not contain numbers.");
+            }
+
+            if (name.Any(c => !char.IsLetter(c)))
+            {
+                ModelState.AddModelError(propertyName, $"{propertyName} should contain only letters.");
+            }
+
+            if (name.Contains(" "))
+            {
+                ModelState.AddModelError(propertyName, $"{propertyName} should not contain spaces.");
+            }
+
+            if (name.Length < 2)
+            {
+                ModelState.AddModelError(propertyName, $"{propertyName} should contain 2 or more letters.");
+            }
+        }
+
     }
 }
