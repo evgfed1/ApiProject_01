@@ -38,8 +38,8 @@ namespace Evg.Controllers
         [HttpPost]
         public IActionResult Edit(PersonDto person)
         {
-            ValidateName(person.FirstName, nameof(person.FirstName));
-            ValidateName(person.LastName, nameof(person.LastName));
+            validateName(person.FirstName, nameof(person.FirstName));
+            validateName(person.LastName, nameof(person.LastName));
 
             if (!ModelState.IsValid)
             {
@@ -72,36 +72,36 @@ namespace Evg.Controllers
         }
 
 
-        private void ValidateName(string name, string propertyName)
+        private void validateName(string _name, string _propertyName)
         {
-            if (!char.IsUpper(name[0]))
+            if (!char.IsUpper(_name[0]))
             {
-                ModelState.AddModelError(propertyName, $"{propertyName} must start with a capital letter.");
+                ModelState.AddModelError(_propertyName, $"{_propertyName} must start with a capital letter.");
             }
 
-            if (Regex.IsMatch(name, @"[A-Z]{2,}"))
+            if (Regex.IsMatch(_name, @"[A-Z]{2,}"))
             {
-                ModelState.AddModelError(propertyName, $"{propertyName} should not contain two or more capital letters.");
+                ModelState.AddModelError(_propertyName, $"{_propertyName} should not contain two or more capital letters.");
             }
 
-            if (name.Any(char.IsDigit))
+            if (_name.Any(char.IsDigit))
             {
-                ModelState.AddModelError(propertyName, $"{propertyName} should not contain numbers.");
+                ModelState.AddModelError(_propertyName, $"{_propertyName} should not contain numbers.");
             }
 
-            if (name.Any(c => !char.IsLetter(c)))
+            if (_name.Any(c => !char.IsLetter(c)))
             {
-                ModelState.AddModelError(propertyName, $"{propertyName} should contain only letters.");
+                ModelState.AddModelError(_propertyName, $"{_propertyName} should contain only letters.");
             }
 
-            if (name.Contains(" "))
+            if (_name.Contains(" "))
             {
-                ModelState.AddModelError(propertyName, $"{propertyName} should not contain spaces.");
+                ModelState.AddModelError(_propertyName, $"{_propertyName} should not contain spaces.");
             }
 
-            if (name.Length < 2)
+            if (_name.Length < 2)
             {
-                ModelState.AddModelError(propertyName, $"{propertyName} should contain 2 or more letters.");
+                ModelState.AddModelError(_propertyName, $"{_propertyName} should contain 2 or more letters.");
             }
         }
     }
